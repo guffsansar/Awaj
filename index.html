@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bidyarthiko Aawaj — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+    }
+    .bg-shapes {
+      position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+    }
+    .bg-shapes span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      animation: float 20s infinite ease-in-out;
+    }
+    .bg-shapes span:nth-child(1) { width: 400px; height: 400px; top: -10%; left: -10%; animation-delay: 0s; }
+    .bg-shapes span:nth-child(2) { width: 300px; height: 300px; bottom: -5%; right: -5%; animation-delay: -5s; }
+    .bg-shapes span:nth-child(3) { width: 200px; height: 200px; top: 50%; left: 60%; animation-delay: -10s; }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    .container {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
+    }
+    .logo {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #f093fb, #f5576c, #ffecd2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2.5rem;
+    }
+    .coming-soon {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .progress-bar {
+      width: 100%;
+      max-width: 320px;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      margin: 0 auto 1.5rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #f093fb, #f5576c);
+      animation: progress 3s ease-in-out infinite;
+    }
+    @keyframes progress {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .social-links svg { width: 20px; height: 20px; fill: currentColor; }
+    .dots {
+      display: inline-flex;
+      gap: 6px;
+      margin-left: 8px;
+    }
+    .dots span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      animation: dotPulse 1.4s ease-in-out infinite;
+    }
+    .dots span:nth-child(2) { animation-delay: 0.2s; }
+    .dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotPulse {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-shapes">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="container">
+    <div class="badge">🚀 Under Development</div>
+    <div class="logo">बिद्यार्थीको आवाज</div>
+    <div class="subtitle">Bidyarthiko Aawaj — Your Voice, Your Stories</div>
+    <div class="coming-soon">
+      Coming Soon
+      <span class="dots">
+        <span></span><span></span><span></span>
+      </span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <p style="color: rgba(255,255,255,0.45); font-size: 0.9rem; line-height: 1.6; max-width: 420px; margin: 0 auto;">
+      A platform for students to share anonymously, connect freely, and speak without fear.
+    </p>
+    <div class="social-links">
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="#" aria-label="Twitter">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <footer>&copy; 2026 Bidyarthiko Aawaj. All rights reserved.</footer>
+  </div>
+</body>
+</html>
