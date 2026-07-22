@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Feed from './components/Feed'
@@ -7,7 +7,10 @@ import PostModal from './components/PostModal'
 import AuthModal from './components/AuthModal'
 import CommentsModal from './components/CommentsModal'
 import Footer from './components/Footer'
-import Admin from './pages/Admin'
+import AdminLogin from './pages/AdminLogin'
+import AdminDashboard from './pages/AdminDashboard'
+
+const API_URL = 'http://localhost:5000/api'
 
 const samplePosts = [
   {
@@ -69,13 +72,27 @@ function Home({ user, onPostClick, onLoginClick, onLogout, posts, onComment, onR
 
 function AppContent() {
   const [user, setUser] = useState(null)
+  const [adminUser, setAdminUser] = useState(null)
   const [posts, setPosts] = useState(samplePosts)
   const [showPostModal, setShowPostModal] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [showCommentsModal, setShowCommentsModal] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
   const location = useLocation()
-  const isAdmin = location.pathname === '/admin'
+  const isAdminLogin = location.pathname === '/admin/login'
+  const isAdminDashboard = location.pathname === '/admin/dashboard'
+  const isAdmin = isAdminLogin || isAdminDashboard
+
+  useEffect(() => {
+    const saved = localStorage.getItem('admin')
+    if (saved) {
+      try {
+        setAdminUser(JSON.parse(saved))
+      } catch (e) {
+        localStorage.removeItem('admin')
+      }
+    }
+  }, [])
 
   const handleLogin = (userData) => {
     setUser(userData)
@@ -86,16 +103,37 @@ function AppContent() {
     setUser(null)
   }
 
-  const handlePost = (newPost) => {
-    const post = {
-      id: Date.now(),
-      ...newPost,
-      author: user,
-      votes: 0,
-      comments: [],
-      created_at: new Date().toISOString()
+  const handleAdminLogin = (userData) => {
+    setAdminUser(userData)
+  }
+
+  const handleAdminLogout = () => {
+    setAdminUser(null)
+  }
+
+  const handlePost = async (newPost) => {
+    try {
+      const res = await fetch(`${API_URL}/posts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...newPost,
+          author: user
+        })
+      })
+      const savedPost = await res.json()
+      setPosts([savedPost, ...posts])
+    } catch (err) {
+      const post = {
+        id: Date.now(),
+        ...newPost,
+        author: user,
+        votes: 0,
+        comments: [],
+        created_at: new Date().toISOString()
+      }
+      setPosts([post, ...posts])
     }
-    setPosts([post, ...posts])
   }
 
   const handleComment = (post) => {
@@ -145,7 +183,21 @@ function AppContent() {
               onReport={handleReport}
             />
           } />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/login" element={
+            adminUser ? (
+              <Navigate to="/admin/dashboard" replace />
+            ) : (
+              <AdminLogin onLogin={handleAdminLogin} />
+            )
+          } />
+          <Route path="/admin/dashboard" element={
+            adminUser ? (
+              <AdminDashboard user={adminUser} onLogout={handleAdminLogout} />
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          } />
+          <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         </Routes>
       </main>
       {!isAdmin && <Footer />}
