@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -6,6 +7,7 @@ import PostModal from './components/PostModal'
 import AuthModal from './components/AuthModal'
 import CommentsModal from './components/CommentsModal'
 import Footer from './components/Footer'
+import Admin from './pages/Admin'
 
 const samplePosts = [
   {
@@ -13,7 +15,7 @@ const samplePosts = [
     type: 'problem',
     province: 'Bagmati',
     district: 'Kathmandu',
-    content: 'The college library closes too early at 5 PM. Many students who travel from远 far areas cannot utilize the study space during evening hours. This affects our preparation for exams significantly.',
+    content: 'The college library closes too early at 5 PM. Many students who travel from far areas cannot utilize the study space during evening hours. This affects our preparation for exams significantly.',
     anonymous: false,
     author: { name: 'Ram Thapa', avatar: null },
     votes: 42,
@@ -51,13 +53,29 @@ const samplePosts = [
   }
 ]
 
-function App() {
+function Home({ user, onPostClick, onLoginClick, onLogout, posts, onComment, onReport }) {
+  return (
+    <>
+      <Hero />
+      <Feed
+        posts={posts}
+        onComment={onComment}
+        onReport={onReport}
+        onPostClick={onPostClick}
+      />
+    </>
+  )
+}
+
+function AppContent() {
   const [user, setUser] = useState(null)
   const [posts, setPosts] = useState(samplePosts)
   const [showPostModal, setShowPostModal] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [showCommentsModal, setShowCommentsModal] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
+  const location = useLocation()
+  const isAdmin = location.pathname === '/admin'
 
   const handleLogin = (userData) => {
     setUser(userData)
@@ -100,28 +118,37 @@ function App() {
     }))
   }
 
-  const handleReport = (post) => {
+  const handleReport = () => {
     alert('Report submitted. Thank you for helping keep our community safe.')
   }
 
   return (
     <div className="app">
-      <Navbar
-        onPostClick={() => user ? setShowPostModal(true) : setShowAuthModal(true)}
-        onLoginClick={() => setShowAuthModal(true)}
-        user={user}
-        onLogout={handleLogout}
-      />
-      <main>
-        <Hero />
-        <Feed
-          posts={posts}
-          onComment={handleComment}
-          onReport={handleReport}
+      {!isAdmin && (
+        <Navbar
           onPostClick={() => user ? setShowPostModal(true) : setShowAuthModal(true)}
+          onLoginClick={() => setShowAuthModal(true)}
+          user={user}
+          onLogout={handleLogout}
         />
+      )}
+      <main>
+        <Routes>
+          <Route path="/" element={
+            <Home
+              user={user}
+              onPostClick={() => user ? setShowPostModal(true) : setShowAuthModal(true)}
+              onLoginClick={() => setShowAuthModal(true)}
+              onLogout={handleLogout}
+              posts={posts}
+              onComment={handleComment}
+              onReport={handleReport}
+            />
+          } />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
       </main>
-      <Footer />
+      {!isAdmin && <Footer />}
 
       <PostModal
         isOpen={showPostModal}
@@ -142,6 +169,14 @@ function App() {
         onAddComment={handleAddComment}
       />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   )
 }
 

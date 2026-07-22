@@ -89,6 +89,12 @@
   color: var(--primary);
 }
 
+.admin-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
 .btn-text {
   background: none;
   border: none;

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './Navbar.css'
 
 function Navbar({ onPostClick, onLoginClick, user, onLogout }) {
@@ -20,6 +21,7 @@ function Navbar({ onPostClick, onLoginClick, user, onLogout }) {
         <button className="lang-toggle" onClick={toggleLang} title="Toggle Language">
           {lang}
         </button>
+        <Link to="/admin" className="btn-outline admin-link">Admin</Link>
         <button className="btn-primary desktop-only" onClick={onPostClick}>
           Post Aawaj
         </button>
